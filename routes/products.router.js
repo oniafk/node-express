@@ -10,15 +10,13 @@ const {
 const router = express.Router();
 const service = new ProductServices();
 
-router.get('/', async (req, res) => {
-  const products = await service.find();
-  res.json(products);
-});
-
-//crear ruta para obtener un producto por id desde el lado del backend, no afecta en router del lado del frontend ya que se maneja diferente
-
-router.get('filter', async (req, res) => {
-  res.send('Soy un filtro');
+router.get('/', async (req, res, next) => {
+  try {
+    const products = await service.find();
+    res.json(products);
+  } catch (error) {
+    next(error);
+  }
 });
 
 router.get(
@@ -27,7 +25,7 @@ router.get(
   async (req, res, next) => {
     try {
       const { id } = req.params;
-      const product = await service.getById(id);
+      const product = await service.findOne(id);
       res.json(product);
     } catch (error) {
       next(error);
@@ -38,10 +36,14 @@ router.get(
 router.post(
   '/',
   validatorHandler(createProductSchema, 'body'),
-  async (req, res) => {
-    const body = req.body;
-    const newProduct = await service.create(body);
-    res.status(201).json(newProduct);
+  async (req, res, next) => {
+    try {
+      const body = req.body;
+      const newProduct = await service.create(body);
+      res.status(201).json(newProduct);
+    } catch (error) {
+      next(error);
+    }
   },
 );
 
@@ -53,7 +55,6 @@ router.patch(
     try {
       const { id } = req.params;
       const body = req.body;
-
       const product = await service.update(id, body);
       res.json(product);
     } catch (error) {
@@ -62,10 +63,18 @@ router.patch(
   },
 );
 
-router.delete('/:id', async (req, res) => {
-  const { id } = req.params;
-  const rta = await service.delete(id);
-  res.json(rta);
-});
+router.delete(
+  '/:id',
+  validatorHandler(getProductSchema, 'params'),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      await service.delete(id);
+      res.status(201).json({ id });
+    } catch (error) {
+      next(error);
+    }
+  },
+);
 
 module.exports = router;
