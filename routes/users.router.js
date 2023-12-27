@@ -6,7 +6,7 @@ const {
   updateUserSchema,
   createUserSchema,
   getUserSchema,
-} = require('./../schemas/user.schema');
+} = require('./../schemas/users.schema');
 
 const router = express.Router();
 const service = new UserService();

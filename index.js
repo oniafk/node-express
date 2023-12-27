@@ -13,7 +13,11 @@ const port = 3005;
 
 app.use(express.json());
 
-const whiteList = ['http://localhost:8080', 'https://myapp.co'];
+const whiteList = [
+  'http://localhost:8080',
+  'https://myapp.co',
+  'https://localhost:3005',
+];
 const options = {
   origin: (origin, callback) => {
     if (whiteList.includes(origin)) {
@@ -24,7 +28,7 @@ const options = {
   },
 };
 
-app.use(cors(options));
+app.use(cors());
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
