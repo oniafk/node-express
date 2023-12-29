@@ -11,14 +11,6 @@ const UserSchema = {
     autoIncrement: true,
     allowNull: false,
   },
-  name: {
-    type: DataTypes.STRING(50),
-    allowNull: false,
-  },
-  lastname: {
-    type: DataTypes.STRING(50),
-    allowNull: false,
-  },
   email: {
     type: DataTypes.STRING(50),
     allowNull: false,
@@ -42,8 +34,8 @@ const UserSchema = {
 };
 
 class User extends Model {
-  static associate() {
-    //models
+  static associate(models) {
+    this.hasOne(models.Customer, { as: 'customer', foreignKey: 'userId' });
   }
   static config(sequelize) {
     //receive a conection to the DB

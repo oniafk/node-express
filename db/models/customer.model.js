@@ -3,10 +3,10 @@ const CUSTOMER_TABLE = 'customers';
 const { USER_TABLE } = require('./user.model');
 const CustomerSchema = {
   id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
     allowNull: false,
+    autoIncrement: true,
+    primaryKey: true,
+    type: DataTypes.INTEGER,
   },
   name: {
     type: DataTypes.STRING(50),
@@ -17,7 +17,7 @@ const CustomerSchema = {
     allowNull: false,
     field: 'last_name',
   },
-  Phone: {
+  phone: {
     type: DataTypes.STRING(50),
     allowNull: true,
   },
@@ -31,6 +31,7 @@ const CustomerSchema = {
     field: 'user_id',
     allowNull: false,
     type: DataTypes.INTEGER,
+    unique: true,
     references: {
       // User belongsTo Company 1:1 (foreignKey) table that will be associated to
       model: USER_TABLE,
