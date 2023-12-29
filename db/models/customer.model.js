@@ -47,6 +47,10 @@ class Customer extends Model {
   static associate(models) {
     // define association here with other models (foreign keys) that will be used in the application and the database
     this.belongsTo(models.User, { as: 'user' });
+    this.hasMany(models.Order, {
+      as: 'orders',
+      foreignKey: 'customerId',
+    });
   }
   static config(sequelize) {
     return {
