@@ -5,14 +5,14 @@ const email = Joi.string().email();
 const password = Joi.string().min(8);
 const name = Joi.string().min(3);
 const lastname = Joi.string().min(3);
-// const role = Joi.string().min(5);
+const role = Joi.string().min(2);
 
 const createUserSchema = Joi.object({
   email: email.required(),
   password: password.required(),
   name: name.required(),
   lastname: lastname.required(),
-  // role: role.required(),
+  role: role,
 });
 
 const updateUserSchema = Joi.object({
@@ -20,7 +20,7 @@ const updateUserSchema = Joi.object({
   password: password,
   name: name,
   lastname: lastname,
-  // role: role,
+  role: role,
 });
 
 const getUserSchema = Joi.object({

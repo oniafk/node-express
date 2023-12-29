@@ -28,6 +28,11 @@ const UserSchema = {
     type: DataTypes.STRING(50),
     allowNull: false,
   },
+  role: {
+    type: DataTypes.STRING(50),
+    allowNull: false,
+    defaultValue: 'customer',
+  },
   createdAt: {
     type: DataTypes.DATE,
     defaultValue: Sequelize.NOW,
