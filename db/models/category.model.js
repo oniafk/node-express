@@ -19,15 +19,20 @@ const CategorySchema = {
     allowNull: false,
   },
   createAt: {
-    allowNull: false,
     type: DataTypes.DATE,
-    field: 'create_at',
-    degaultValue: Sequelize.NOW,
+    defaultValue: Sequelize.NOW,
+    allowNull: false,
+    field: 'created_at',
   },
 };
 
 class Category extends Model {
-  static associate() {}
+  static associate(models) {
+    this.hasMany(models.Product, {
+      as: 'products',
+      foreignKey: 'categoryId',
+    });
+  }
 
   static config(sequelize) {
     return {
@@ -39,4 +44,4 @@ class Category extends Model {
   }
 }
 
-exports.module = { CategorySchema, Category, CATEGORY_TABLE };
+module.exports = { CategorySchema, Category, CATEGORY_TABLE };

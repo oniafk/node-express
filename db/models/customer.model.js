@@ -1,6 +1,7 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
 const CUSTOMER_TABLE = 'customers';
 const { USER_TABLE } = require('./user.model');
+
 const CustomerSchema = {
   id: {
     allowNull: false,
